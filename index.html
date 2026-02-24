@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TICTACTOE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="start">
+      <h1>TICTACTOE</h1>
+      <form>
+        <label for="player1">Player 1:</label>
+        <input type="text" id="player1" name="player1" required />
+        <br />
+        <label for="player2">Player 2:</label>
+        <input type="text" id="player2" name="player2" required />
+        <br />
+        <button type="submit">Start Game</button>
+      </form>
+    </div>
+
+    <div class="main">
+      <h1>TICTACTOE</h1>
+      <div class="board">
+        <div class="cell 1"><p class="X"></p></div>
+        <div class="cell 2"><p class="X"></p></div>
+        <div class="cell 3"><p class="X"></p></div>
+        <div class="cell 4"><p class="X"></p></div>
+        <div class="cell 5"><p class="X"></p></div>
+        <div class="cell 6"><p class="X"></p></div>
+        <div class="cell 7"><p class="X"></p></div>
+        <div class="cell 8"><p class="X"></p></div>
+        <div class="cell 9"><p class="X"></p></div>
+      </div>
+      <div class="players">
+        <div class="player player1">
+          <p id="player1-name">Player 1: <span>X</span></p>
+        </div>
+        <div class="player player2">
+          <p id="player2-name">Player 2: <span>O</span></p>
+        </div>
+      </div>
+      <button class="restart">Restart</button>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
