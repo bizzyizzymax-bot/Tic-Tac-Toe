@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -13,32 +13,22 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="start">
-      <h1>TICTACTOE</h1>
-      <form>
-        <label for="player1">Player 1:</label>
-        <input type="text" id="player1" name="player1" required />
-        <br />
-        <label for="player2">Player 2:</label>
-        <input type="text" id="player2" name="player2" required />
-        <br />
-        <button type="submit">Start Game</button>
-      </form>
-    </div>
-
     <div class="main">
-      <h1>TICTACTOE</h1>
+      <h1 class="title">TICTACTOE</h1>
       <div class="board">
-        <div class="cell 1"><p class="X"></p></div>
-        <div class="cell 2"><p class="X"></p></div>
-        <div class="cell 3"><p class="X"></p></div>
-        <div class="cell 4"><p class="X"></p></div>
-        <div class="cell 5"><p class="X"></p></div>
-        <div class="cell 6"><p class="X"></p></div>
-        <div class="cell 7"><p class="X"></p></div>
-        <div class="cell 8"><p class="X"></p></div>
-        <div class="cell 9"><p class="X"></p></div>
+        <div id="1" class="cell"></div>
+        <div id="2" class="cell"></div>
+        <div id="3" class="cell"></div>
+        <div id="4" class="cell"></div>
+        <div id="5" class="cell"></div>
+        <div id="6" class="cell"></div>
+        <div id="7" class="cell"></div>
+        <div id="8" class="cell"></div>
+        <div id="9" class="cell"></div>
       </div>
+
+      <h1 class="status">Player 1's Turn</h1>
+
       <div class="players">
         <div class="player player1">
           <p id="player1-name">Player 1: <span>X</span></p>
@@ -47,8 +37,11 @@
           <p id="player2-name">Player 2: <span>O</span></p>
         </div>
       </div>
-      <button class="restart">Restart</button>
+      <div>
+        <button class="reset">Reset</button>
+      </div>
     </div>
+    <!--- <script src="script.js"></script> -->
     <script src="script.js"></script>
   </body>
 </html>

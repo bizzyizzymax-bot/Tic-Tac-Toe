@@ -1,5 +1,9 @@
 const board = document.querySelector(".board");
 const cells = document.querySelectorAll(".cell");
+const gameStatus = document.querySelector(".status");
+const resetBtn = document.querySelector(".reset");
+
+// GAMEBOARD
 
 const Gameboard = (() => {
   let gameboard = [
@@ -23,18 +27,7 @@ const Gameboard = (() => {
   return { getGameboard, setGameboard };
 })();
 
-const styleGameboard = () => {
-  const gameboard = Gameboard.getGameboard();
-  const newStyle = `
-  ${gameboard[0]} ${gameboard[1]} ${gameboard[2]} \n
-  ${gameboard[3]} ${gameboard[4]} ${gameboard[5]} \n
-  ${gameboard[6]} ${gameboard[7]} ${gameboard[8]}
-  `;
-
-  const getGameboardStyle = () => newStyle;
-
-  return { getGameboardStyle };
-};
+// CREATE PLAYER OBJECTS
 
 const Player = (playerName, marker) => {
   const getPlayerMarker = () => marker;
@@ -43,11 +36,13 @@ const Player = (playerName, marker) => {
   return { getPlayerMarker, getPlayerName };
 };
 
-const checkWin = (playerMarker) => {
-  const gameboard = Gameboard.getGameboard();
-  const m = playerMarker;
+// CHECK IF THE PLAYER HAS WON
 
-  return (
+const checkWin = (player, player1) => {
+  const gameboard = Gameboard.getGameboard();
+  const m = player.getPlayerMarker();
+
+  if (
     (gameboard[0] === m && gameboard[1] === m && gameboard[2] === m) ||
     (gameboard[3] === m && gameboard[4] === m && gameboard[5] === m) ||
     (gameboard[6] === m && gameboard[7] === m && gameboard[8] === m) ||
@@ -56,25 +51,21 @@ const checkWin = (playerMarker) => {
     (gameboard[0] === m && gameboard[3] === m && gameboard[6] === m) ||
     (gameboard[1] === m && gameboard[4] === m && gameboard[7] === m) ||
     (gameboard[2] === m && gameboard[5] === m && gameboard[8] === m)
-  );
-};
-
-const placeMarkerFunc = (position, playerMarker) => {
-  const gameboard = Gameboard.getGameboard();
-  const index = parseInt(position) - 1;
-  if (!(index >= 0 && index <= 8)) {
-    //Checking to see if the player's input is through 1-9
-    alert("Invalid input");
-    return false;
-  }
-  if (gameboard[index] === "X" || gameboard[index] === "O") {
-    alert("This spot is already taken!");
-    return false;
+  ) {
+    if (player === player1) {
+      alert("Player 1 Wins!");
+      gameStatus.textContent = "Player 1 Wins!";
+    } else {
+      alert("Player 2 Wins!");
+      gameStatus.textContent = "Player 2 Wins!";
+    }
+    return player;
   }
 
-  gameboard[index] = playerMarker;
-  return true;
+  return false;
 };
+
+// PLAY AGAIN
 
 function playAgain() {
   const playAgain = prompt("Would you like to play again? (y: yes, n: no)");
@@ -87,6 +78,8 @@ function playAgain() {
     playAgain();
   }
 }
+
+// RESET GAME
 
 function resetGame() {
   const newGameboard = [
@@ -105,59 +98,61 @@ function resetGame() {
   Gameboard.setGameboard(newGameboard);
 }
 
-function gameLogic() {
-  let gameOver = false;
-  const player1Name = prompt("What is player1's name?: ");
-  const player2Name = prompt("What is player2's name?: ");
-  const player1 = Player(player1Name, "X");
-  const player2 = Player(player2Name, "O");
+// GAME LOGIC
 
-  while (gameOver === false) {
-    //Player 1's Turn
+const gameLogic = (() => {
+  let gameRunning = true;
+  const gameboard = Gameboard.getGameboard();
+  const player1 = Player("Player1", "X");
+  const player2 = Player("Player2", "O");
+  let currentPlayer = player1;
 
-    let gameboardStyle1 = styleGameboard().getGameboardStyle();
-    let player1MarkerPosition = prompt(
-      `${gameboardStyle1}\n ${player1.getPlayerName()} Place a marker (Enter: 1-9)`
-    );
-    while (!placeMarkerFunc(player1MarkerPosition, player1.getPlayerMarker())) {
-      player1MarkerPosition = prompt("Try again:");
-    }
+  cells.forEach((cell) => {
+    cell.addEventListener("click", function () {
+      const mark = currentPlayer.getPlayerMarker();
+      const index = parseInt(cell.id) - 1;
 
-    //Check if the player won
-    if (checkWin(player1.getPlayerMarker())) {
-      alert(`${player1.getPlayerName()} wins!`);
-      gameOver = true;
-      break;
-    }
+      if (gameRunning) {
+        if (index >= 0 && index < gameboard.length) {
+          if (gameboard[index] === "X" || gameboard[index] === "O") {
+            alert("This spot is already taken! Please select another one.");
+          } else {
+            gameboard[index] = mark;
+            cell.textContent = mark;
+            if (!checkWin(currentPlayer, player1, player2)) {
+              if (currentPlayer === player1) {
+                currentPlayer = player2;
+                cell.classList.add("X");
+                gameStatus.textContent = "Player 2's Turn";
+              } else {
+                currentPlayer = player1;
+                cell.classList.add("O");
+                gameStatus.textContent = "Player 1's Turn";
+              }
+            } else {
+              if (currentPlayer === player1) {
+                cell.classList.add("X");
+              } else {
+                cell.classList.add("O");
+              }
+              gameRunning = false;
+            }
+          }
+        }
+      }
+    });
+  });
 
-    //Player 2's Turn
-
-    let gameboardStyle2 = styleGameboard().getGameboardStyle();
-
-    let player2MarkerPosition = prompt(
-      `${gameboardStyle2}\n ${player2.getPlayerName()} Place a marker (Enter: 1-9)`
-    );
-    while (!placeMarkerFunc(player2MarkerPosition, player2.getPlayerMarker())) {
-      player2MarkerPosition = prompt("Try again:");
-    }
-
-    //Check if the player won
-    if (checkWin(player2.getPlayerMarker())) {
-      alert(`${player2.getPlayerName()} wins!`);
-      gameOver = true;
-      break;
-    }
-  }
-
-  if (playAgain()) {
-    resetGame();
-    gameLogic();
-  }
-}
-
-gameLogic();
+  resetBtn.addEventListener("click", () => {
+    window.location.reload();
+  });
+})();
 
 //NOTES
 
-//Reset the game once it finishes
-//Stop the game from promting once someone wins.
+// Gameboard is an object that contains the gameboard array.
+// Player is an object that contains the player's name and marker.
+// checkWin is a function that checks if the player has won.
+// playAgain is a function that asks the player if they want to play again.
+// resetGame is a function that resets the gameboard.
+// gameLogic is a function that contains the game logic.

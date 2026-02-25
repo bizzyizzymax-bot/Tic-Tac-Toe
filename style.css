@@ -11,49 +11,6 @@ body {
   width: 100%;
 }
 
-/* --- Start --- */
-
-.start {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-.start h1 {
-  font-size: 4rem;
-  margin-bottom: 20px;
-}
-.start form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.start form label {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-.start form input {
-  padding: 10px;
-  font-size: 1rem;
-  margin-bottom: 20px;
-  width: 200px;
-}
-.start form button {
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  background-color: #4caf50;
-  color: white;
-
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.start {
-  display: none;
-}
-
 /* --- Main --- */
 
 .main {
@@ -75,7 +32,7 @@ body {
   border-radius: 10px;
 }
 
-.main h1 {
+.main .title {
   font-size: 4rem;
   margin-bottom: 20px;
 }
@@ -88,6 +45,7 @@ body {
 .players {
   display: flex;
   margin-top: 20px;
+  margin-left: 25px;
 }
 
 .player p {
@@ -108,7 +66,7 @@ body {
   color: rgb(0, 123, 255);
 }
 
-.restart {
+.reset {
   padding: 10px 20px;
   font-size: 1.2rem;
   background-color: #494949;
@@ -118,7 +76,6 @@ body {
   cursor: pointer;
   width: 150px;
   margin-top: 25px;
-  margin-left: 300px;
 }
 
 .main {
@@ -133,9 +90,30 @@ body {
   cursor: pointer;
 }
 
-.x {
+.X {
   color: rgb(236, 24, 24);
 }
-.o {
+.O {
   color: rgb(0, 123, 255);
+}
+
+.status {
+  margin-top: 20px;
+  font-size: 2.5em;
+}
+
+/* Add animation to the cells */
+
+.cell:hover {
+  background-color: #636363;
+  transform: scale(1.02);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Add animation to the reset button */
+
+.reset:hover {
+  background-color: #636363;
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
 }
