@@ -15,6 +15,5 @@ https://tictactoeproject-im.netlify.app/
 - Javascript
 
 # What I learned
-- How to use javascript arrays
-- How to implement DOM into javascript and use it
+- How to use and create javascript factory functions and objects
 
